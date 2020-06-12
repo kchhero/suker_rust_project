@@ -1,0 +1,9 @@
+d:\REPOSITORY_MANAGE\kchhero\suker_rust_project\logReportServer\target\debug\deps\futures_channel-9053ed7e85934103.rmeta: C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\lib.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\lock.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\mpsc\mod.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\mpsc\queue.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\oneshot.rs
+
+d:\REPOSITORY_MANAGE\kchhero\suker_rust_project\logReportServer\target\debug\deps\futures_channel-9053ed7e85934103.d: C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\lib.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\lock.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\mpsc\mod.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\mpsc\queue.rs C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\oneshot.rs
+
+C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\lib.rs:
+C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\lock.rs:
+C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\mpsc\mod.rs:
+C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\mpsc\queue.rs:
+C:\Users\suker.NC-KOREA\.cargo\registry\src\github.com-1ecc6299db9ec823\futures-channel-0.3.5\src\oneshot.rs:
