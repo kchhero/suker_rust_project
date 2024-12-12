@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tauri App</title>
+    <script type="module" src="/main.js" defer></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="id-header">
+        <h2 id="headerText">What are you looking for?</h2>
+      </header>      
+      <div class="row" name="defaultDiv">
+          <input id="id-input-search-main" class="focusableInput" tabindex="0" placeholder="file or dir name" /> &nbsp;&nbsp;
+          <input id="id-input-search-ext" class="focusableInput" tabindex="1" placeholder="extension" /> &nbsp;&nbsp;
+      </div> 
+      <br>
+      <div class="row" name="defaultDiv2">
+          <input id="id-input-location" class="focusableInput" tabindex="2" placeholder="search location ..." size="50%px"/> &nbsp;&nbsp;
+          <button id="id-button-location" type="button" class="focusable" tabindex="3">...</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          
+          <div id="id-button-run" class="focusable custom-button" role="button" tabindex="4"> RUN </div>          
+      </div>
+    </div>
+  </body>
+</html>
