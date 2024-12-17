@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tauri App</title>
     <script type="module" src="/main.js" defer></script>
+    <script type="module" src="/common.js"></script>
+    <style>
+      .logo.vanilla:hover {
+        filter: drop-shadow(0 0 2em #ffe21c);
+      }
+    </style>
   </head>
 
   <body>
@@ -23,6 +29,14 @@
           <button id="id-button-location" type="button" class="focusable" tabindex="3">...</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          
           <button id="id-button-run" class="focusable custom-button" role="button" tabindex="4"> RUN </button>          
       </div>
+
+      <br>
+      <div class="row" name="outputDiv">        
+          <select multiple size="21" id="id-select-out" style="width:100%">
+          </select>
+      </div>
+      <br><br>
+      <div id="id-toast"></div>  
     </div>
   </body>
 </html>
