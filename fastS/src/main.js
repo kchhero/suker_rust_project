@@ -9,6 +9,7 @@ let inputCheckStrict = document.querySelector("#id-check-strict");
 let inputLocation = document.querySelector("#id-input-location");
 
 let resultOut = document.querySelector("#id-select-out");
+let drawCircle = document.querySelector("#id-drawcircle");
 
 let timerId_check;
 
@@ -27,6 +28,8 @@ function init() {
 	inputCheckStrict.checked = true;
   inputLocation.textContent = "";
   
+  drawCircle.style.display = "none";
+
   bDisplayDone = false;
 }
 
@@ -56,6 +59,7 @@ async function run() {
     }
   }
 
+  drawCircle.style.display = "block";
   timerId_check = setInterval(() => checkDone(), 1000);
 
   await invoke(callbackName, { 
@@ -79,6 +83,7 @@ async function checkDone() {
 async function displayList() {
   if (bDisplayDone == false) {
     resultOut.options.length = 0;
+    drawCircle.style.display = "none";
 
     let v = await invoke("rust_make_vec_result", {});
     console.log(v.length);
