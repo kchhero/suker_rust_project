@@ -2,7 +2,9 @@ use rust_search::{SearchBuilder, FilterExt};
 use std::sync::Mutex;
 use lazy_static::lazy_static;
 use rfd::FileDialog;
+use std::process::Command;
 use std::cell::RefCell;
+use std::path::PathBuf;
 
 lazy_static! {
         static ref SINGLETON_SEARCH: Mutex<SukerSearch> = Mutex::new(SukerSearch::default());
@@ -42,6 +44,24 @@ pub fn rust_open_dir_dialog() -> String {
         },
         None => "No file selected".to_string(),
     }
+}
+
+#[tauri::command]
+pub fn rust_open_dir_dialog_standalone(path: &str) {
+    let path = PathBuf::from(path);
+    let real_dir_path;
+    if path.is_dir() {
+        println!("is dir");
+        real_dir_path = path.to_str().unwrap().to_string();
+    } else {
+        println!("is not dir");
+        real_dir_path = path.parent().unwrap().to_str().unwrap().to_string();
+    }
+    println!("{}", real_dir_path);
+    Command::new("explorer")
+        .arg(real_dir_path)
+        .spawn()
+        .expect("failed to execute process");
 }
 
 #[tauri::command]

@@ -38,6 +38,31 @@
       </div>
 
       <br>
+      <button type="button" class="collapsible">more ...  &#8597;</button>      
+      <div class="foldcontent" name="extensionDiv">
+          <input id="id-input-more1" placeholder="location add..." size="50%"/>
+          <button type="button" id="id-button-more1">...</button>
+          <div class="small" style="float: right;">
+              <label for="name-depth">depth</label>
+              <input id="id-input-depth" size="5px"/> &nbsp;&nbsp;
+          </div>
+          <br>
+          <input id="id-input-more2" placeholder="location add..." size="50%"/>
+          <button type="button" id="id-button-more2">...</button>
+          <div class="small" style="float: right;">
+              <label for="name-limit">max count</label>
+              <input id="id-input-limit" size="5px"/> &nbsp;&nbsp;
+          </div>
+          <br>
+          <input id="id-input-more3" placeholder="location add..." size="50%"/>
+          <button type="button" id="id-button-more3">...</button>
+      </div>      
+      <br>
+      <div style="text-align: left;">
+        <label">double click! ==> copy to clipboard or open dialog</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input class="check2" type="checkbox" id="id-check-opendialog" name="name-check-dialog" checked />
+        <label for="name-check-dialog">open folder</label>
+      </div>
       <div class="row" name="outputDiv">        
           <select multiple size="21" id="id-select-out" style="width:100%">
           </select>
