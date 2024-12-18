@@ -1,7 +1,8 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 pub mod search;
 use search::{
-    do_search_file, rust_open_dir_dialog,
+    do_search_file, do_search_dir,
+    rust_open_dir_dialog,
     rust_check_search_done,
     rust_make_vec_result};
 
@@ -10,7 +11,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![
-            do_search_file,
+            do_search_file, do_search_dir,
             rust_open_dir_dialog,
             rust_check_search_done,
             rust_make_vec_result])

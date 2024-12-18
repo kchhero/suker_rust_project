@@ -4,6 +4,8 @@ import { isPathIsFile, toastOn, splitFileName } from "./common.js";
 
 let inputSearchMain = document.querySelector("#id-input-search-main");
 let inputSearchExt = document.querySelector("#id-input-search-ext");
+let inputCheckHidden = document.querySelector("#id-check-hidden");
+let inputCheckStrict = document.querySelector("#id-check-strict");
 let inputLocation = document.querySelector("#id-input-location");
 
 let resultOut = document.querySelector("#id-select-out");
@@ -21,6 +23,8 @@ function init() {
   inputSearchExt.disabled = false;
   inputSearchMain.textContent = "";
   inputSearchExt.textContent = "";	
+  inputCheckHidden.checked = true;
+	inputCheckStrict.checked = true;
   inputLocation.textContent = "";
   
   bDisplayDone = false;
@@ -56,8 +60,8 @@ async function run() {
 
   await invoke(callbackName, { 
     locStart: inputLocation.value, inSearch: tempMain,    
-    limit: Number("100"), ext: tempExt,
-    depth: Number("10")
+    limit: Number("10"), ext: tempExt,
+    depth: Number("3"), hidden: inputCheckHidden.checked, strict: inputCheckStrict.checked
   });
 }
 

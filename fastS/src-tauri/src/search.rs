@@ -1,4 +1,4 @@
-use rust_search::SearchBuilder;
+use rust_search::{SearchBuilder, FilterExt};
 use std::sync::Mutex;
 use lazy_static::lazy_static;
 use rfd::FileDialog;
@@ -46,7 +46,7 @@ pub fn rust_open_dir_dialog() -> String {
 
 #[tauri::command]
 pub fn do_search_file(loc_start: &str, in_search: &str,
-        limit: usize, ext: &str, depth: usize)
+        limit: usize, ext: &str, depth: usize, hidden: bool, strict: bool)
 {
     init();
     println!("do_search_file\n");
@@ -63,6 +63,13 @@ pub fn do_search_file(loc_start: &str, in_search: &str,
         .ext(ext) // 확장자
         .depth(depth); // 깊이
 
+    if strict {
+        builder = builder.strict(); // 정확도
+    }
+    if hidden {
+        builder = builder.hidden(); // hidden file
+    }
+
     let collected: Vec<String> = builder.build().collect();
 
     SINGLETON_SEARCH.lock().unwrap().search_result.borrow_mut().extend(collected);
@@ -74,6 +81,39 @@ pub fn do_search_file(loc_start: &str, in_search: &str,
     println!("limit = {}\n", limit);
     println!("ext = {}\n", ext);
     println!("depth = {}\n", depth);
+    println!("hidden = {},  strict = {}\n", hidden, strict);
+}
+
+//find folder
+#[tauri::command]
+pub fn do_search_dir(loc_start: &str, in_search: &str,
+                                            limit: usize, _ext: &str, depth: usize, hidden: bool, strict: bool)
+{
+    init();
+    println!("do_search_dir\n");
+    let loc_more = vec![""];
+
+    //if in_search is '*' then change empty string
+    let in_search = if in_search == "*" { "" } else { in_search };
+    let mut builder = SearchBuilder::default()
+        .location(loc_start) // 검색 시작 위치
+        .search_input(in_search) // 찾을 파일 or DIR
+        .more_locations(loc_more) // 위치 추가
+        .limit(limit) // 갯수        
+        .depth(depth) // 깊이
+        .custom_filter(|in_search| !in_search.metadata().unwrap().is_file()); // 디렉토리만 찾기
+
+    if strict {
+        builder = builder.strict(); // 정확도
+    }
+    if hidden {
+        builder = builder.hidden(); // hidden file
+    }
+
+    let collected: Vec<String> = builder.build().collect();
+
+    SINGLETON_SEARCH.lock().unwrap().search_result.borrow_mut().extend(collected);
+    SINGLETON_SEARCH.lock().unwrap().search_done = true;
 }
 
 #[tauri::command]
