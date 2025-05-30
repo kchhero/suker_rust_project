@@ -1,8 +1,8 @@
-mod audio;
+mod audiocvt;
 mod blocks;
 mod tetris;
 
-use audio::AudioManager;
+use audiocvt::AudioManager;
 use tetris::Tetris;
 
 fn main() -> Result<(), String> {

@@ -8,7 +8,7 @@ use sdl2::{
     Sdl, TimerSubsystem,
 };
 use rand::Rng;
-use crate::audio::AudioManager;
+use crate::audiocvt::AudioManager;
 use crate::blocks::{BLOCK_SIZE, BOARD_WIDTH, BOARD_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, BLOCKS, COLORS, TetrisBlock};
 
 pub struct Tetris {

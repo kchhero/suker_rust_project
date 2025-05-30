@@ -1,16 +1,17 @@
-use sdl2::audio::{AudioCallback, AudioDevice, AudioSpecWAV};
+use sdl2::audio::{AudioCallback, AudioDevice, AudioSpecWAV, AudioCVT};
+use sdl2::AudioSubsystem;
 use std::path::Path;
 
 pub struct AudioManager {
-    device: Option<AudioDevice<StaticAudio>>,
+    device: Option<AudioDevice<ConvertedAudio>>, // Use converted audio
 }
 
-struct StaticAudio {
+struct ConvertedAudio {
     data: Vec<u8>,
     position: usize,
 }
 
-impl AudioCallback for StaticAudio {
+impl AudioCallback for ConvertedAudio {
     type Channel = u8;
 
     fn callback(&mut self, out: &mut [u8]) {
@@ -22,8 +23,8 @@ impl AudioCallback for StaticAudio {
         } else {
             let remaining = self.data.len() - self.position;
             out[..remaining].copy_from_slice(&self.data[self.position..]);
-            out[remaining..].fill(0); // silence remainder
-            self.position = self.data.len(); // end of stream
+            out[remaining..].fill(0);
+            self.position = self.data.len();
         }
     }
 }
@@ -33,23 +34,30 @@ impl AudioManager {
         Self { device: None }
     }
 
-    pub fn init(&mut self, sdl_audio: &sdl2::AudioSubsystem) -> Result<(), String> {
+    pub fn init(&mut self, audio_subsystem: &AudioSubsystem) -> Result<(), String> {
         let path = Path::new("assets/TetrisBg.wav");
 
         let wav = AudioSpecWAV::load_wav(path)?;
-        println!("WAV format: freq={} channels={} format={:?}",
-            wav.freq,
-            wav.channels,
-            wav.format);
-        let spec = sdl2::audio::AudioSpecDesired {
-            freq: Some(wav.freq),
-            channels: Some(wav.channels),
-            samples: None,
-        };
+        let desired_spec = audio_subsystem.default_audio_spec()?;
 
-        let device = sdl_audio.open_playback(None, &spec, |spec| StaticAudio {
-            data: wav.buffer().to_vec(),
-            position: 0,
+        // Create a converter from WAV spec to the device spec
+        let mut cvt = AudioCVT::new(
+            wav.format(),
+            wav.channels(),
+            wav.freq(),
+            desired_spec.format,
+            desired_spec.channels,
+            desired_spec.freq,
+        )?;
+
+        // Convert the data
+        cvt.convert(&wav.buffer());
+
+        let device = audio_subsystem.open_playback(None, &desired_spec, move |_spec| {
+            ConvertedAudio {
+                data: cvt.buffer().to_vec(),
+                position: 0,
+            }
         })?;
 
         self.device = Some(device);
