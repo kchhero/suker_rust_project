@@ -1,0 +1,70 @@
+use sdl2::audio::{AudioCallback, AudioDevice, AudioSpecWAV};
+use std::path::Path;
+
+pub struct AudioManager {
+    device: Option<AudioDevice<StaticAudio>>,
+}
+
+struct StaticAudio {
+    data: Vec<u8>,
+    position: usize,
+}
+
+impl AudioCallback for StaticAudio {
+    type Channel = u8;
+
+    fn callback(&mut self, out: &mut [u8]) {
+        let len = out.len();
+
+        if self.position + len <= self.data.len() {
+            out.copy_from_slice(&self.data[self.position..self.position + len]);
+            self.position += len;
+        } else {
+            let remaining = self.data.len() - self.position;
+            out[..remaining].copy_from_slice(&self.data[self.position..]);
+            out[remaining..].fill(0); // silence remainder
+            self.position = self.data.len(); // end of stream
+        }
+    }
+}
+
+impl AudioManager {
+    pub fn new() -> Self {
+        Self { device: None }
+    }
+
+    pub fn init(&mut self, sdl_audio: &sdl2::AudioSubsystem) -> Result<(), String> {
+        let path = Path::new("assets/TetrisBg.wav");
+
+        let wav = AudioSpecWAV::load_wav(path)?;
+        println!("WAV format: freq={} channels={} format={:?}",
+            wav.freq,
+            wav.channels,
+            wav.format);
+        let spec = sdl2::audio::AudioSpecDesired {
+            freq: Some(wav.freq),
+            channels: Some(wav.channels),
+            samples: None,
+        };
+
+        let device = sdl_audio.open_playback(None, &spec, |spec| StaticAudio {
+            data: wav.buffer().to_vec(),
+            position: 0,
+        })?;
+
+        self.device = Some(device);
+        Ok(())
+    }
+
+    pub fn play(&mut self) {
+        if let Some(device) = &self.device {
+            device.resume();
+        }
+    }
+
+    pub fn stop(&mut self) {
+        if let Some(device) = &self.device {
+            device.pause();
+        }
+    }
+}
