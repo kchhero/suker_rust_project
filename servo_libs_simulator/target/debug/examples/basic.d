@@ -1,1 +1,0 @@
-/home/suker/repository/suker_rust_project/servo_libs_simulator/target/debug/examples/basic: /home/suker/repository/suker_rust_project/servo_libs_simulator/examples/basic.rs /home/suker/repository/suker_rust_project/servo_libs_simulator/src/lib.rs
