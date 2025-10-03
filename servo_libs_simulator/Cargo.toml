@@ -7,7 +7,7 @@ license = "MIT"
 repository = "https://github.com/kchhero/suker_rust_project/tree/master/servo-libs-simulator"
 readme = "README.md"
 categories = ["simulation", "embedded", "robotics"]
-keywords = ["servo", "pwm", "robotics", "simulation", "mg996r", "motor"]
+keywords = ["servo", "pwm", "robotics", "simulation", "motor"]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
