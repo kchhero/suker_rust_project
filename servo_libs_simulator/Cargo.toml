@@ -6,7 +6,7 @@ description = "Servo motor simulation crate with channel management"
 license = "MIT"
 repository = "https://github.com/kchhero/suker_rust_project/tree/master/servo-libs-simulator"
 readme = "README.md"
-categories = ["simulation", "embedded", "robotics"]
+categories = ["simulation", "embedded", "hardware-support", "science::robotics"]
 keywords = ["servo", "pwm", "robotics", "simulation", "motor"]
 
 [dependencies]
