@@ -72,6 +72,19 @@ impl ServoChannel {
     pub fn set_pulse(&mut self, pulse: u32) {
         self.angle = self.spec.pulse_to_angle(pulse);
     }
+
+    pub fn smooth_move(current: f32, target: f32, speed: f32, delta: f32) -> f32 {
+        let diff = target - current;
+        if diff.abs() < 0.01 {
+            return target;
+        }
+        let step = speed * delta;
+        if diff > 0.0 {
+            (current + step).min(target)
+        } else {
+            (current - step).max(target)
+        }
+    }
 }
 
 /// System of multiple servo channels

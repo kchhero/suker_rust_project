@@ -1,6 +1,6 @@
 [package]
 name = "servo-libs-simulator"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2024"
 description = "Servo motor simulation crate with channel management"
 license = "MIT"
