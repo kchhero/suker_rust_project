@@ -106,3 +106,65 @@ impl ServoSystem {
         self.channels.iter_mut().find(|c| c.id == id)
     }
 }
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Joint {
+    pub name: String,
+    pub angle: f32,
+    pub min_angle: f32,
+    pub max_angle: f32,
+    pub length: f32,// link length
+}
+
+impl Joint {
+    pub fn new(name: &str, min_angle: f32, max_angle: f32, length: f32) -> Self {
+        Self {
+            name: name.to_string(),
+            angle: 0.0,
+            min_angle,
+            max_angle,
+            length,
+        }
+    }
+
+    /// safe range angle setup
+    pub fn set_angle(&mut self, angle: f32) {
+        self.angle = angle.clamp(self.min_angle, self.max_angle);
+    }
+}
+
+/// RobotArm struct
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct RobotArm {
+    pub joints: Vec<Joint>,
+}
+
+impl RobotArm {
+    pub fn new() -> Self {
+        Self { joints: Vec::new() }
+    }
+
+    pub fn add_joint(&mut self, joint: Joint) {
+        self.joints.push(joint);
+    }
+
+    /// Forward kinematics: link position calculation (2D simplification)
+    pub fn calc_positions(&self, origin: (f32, f32)) -> Vec<(f32, f32)> {
+        let mut positions = vec![origin];
+        let mut current_angle = 0.0f32;
+        let mut current_pos = origin;
+
+        for joint in &self.joints {
+            current_angle += joint.angle.to_radians();
+            let x = current_pos.0 + joint.length * current_angle.cos();
+            let y = current_pos.1 - joint.length * current_angle.sin();
+            current_pos = (x, y);
+            positions.push(current_pos);
+        }
+        positions
+    }
+}
+
+pub fn smooth_move(current: f32, target: f32, speed: f32, delta: f32) -> f32 {
+    ServoChannel::smooth_move(current, target, speed, delta)
+}
