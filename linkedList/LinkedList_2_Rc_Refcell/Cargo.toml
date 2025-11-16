@@ -1,0 +1,6 @@
+[package]
+name = "LinkedList_2_Rc_Refcell"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
